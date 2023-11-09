@@ -1,4 +1,4 @@
-package org.example.account;
+package org.example.account.domain;
 
 import java.math.BigDecimal;
 

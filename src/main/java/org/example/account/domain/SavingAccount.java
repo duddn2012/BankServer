@@ -1,9 +1,10 @@
-package org.example.account;
+package org.example.account.domain;
 
 import java.math.BigDecimal;
 
 /*
  * 예금 통장 클래스
+ * TODO 작업 예정
  */
 public class SavingAccount extends Account{
 

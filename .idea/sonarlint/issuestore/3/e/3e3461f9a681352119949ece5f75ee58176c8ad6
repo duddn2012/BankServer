@@ -1,14 +1,0 @@
-
-Q
-java:S37409"/Provide the parametrized type for this generic.(õ›ÿàüÿÿÿÿ8øËò£º1
-z	java:S135"YReduce the total number of break and continue statements in this loop to use at most one.(˜ïˆÿÿÿÿÿ8ùËò£º1
-o
-java:S3776"RRefactor this method to reduce its Cognitive Complexity from 25 to the 15 allowed.(œ±Æ¾8€Ìò£º1
-U
-java:S4719"9Replace charset name argument with StandardCharsets.UTF_8(¸Ÿ¡!8ƒÌò£º1
-L	java:S106"+Replace this use of System.out by a logger.(Ã’§˜úÿÿÿÿ8„Ìò£º1
-F	java:S106"+Replace this use of System.out by a logger.(‚š‰18…Ìò£º1
-F	java:S106"+Replace this use of System.out by a logger.(ÚêH8…Ìò£º1
-F	java:S106?"+Replace this use of System.out by a logger.(Ö’Ï	8‰Ìò£º1
-L	java:S106F"+Replace this use of System.out by a logger.(Å¿ıÅüÿÿÿÿ8‰Ìò£º1
-L	java:S106H"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8‰Ìò£º1

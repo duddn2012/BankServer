@@ -14,7 +14,7 @@ public class Main {
 
         int portNumber = Integer.parseInt(args[0]);
 
-        BankSocket socketServer = new BankSocket(portNumber);
+        Thread socketServer = new BankSocket(portNumber);
         socketServer.start();
     }
 }
