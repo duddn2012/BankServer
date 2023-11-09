@@ -1,0 +1,17 @@
+
+V
+java:S5993"9Change the visibility of this constructor to "protected".(£¥ßâ8 ïî¦º1
+I
+java:S2201 "'The return value of "add" must be used.(¤ü¯ûÿÿÿÿ8¥ïî¦º1
+Q
+java:S2200)"/Only the sign of the result should be examined.(óÂ§€ûÿÿÿÿ8¦ïî¦º1
+Q
+java:S2200)"/Only the sign of the result should be examined.(óÂ§€ûÿÿÿÿ8¦ïî¦º1
+I
+java:S2201*",The return value of "subtract" must be used.(Õïî°8¦ïî¦º1
+I
+java:S22012",The return value of "subtract" must be used.(Õïî°8§ïî¦º1
+D
+java:S22013"'The return value of "add" must be used.(“òí»8§ïî¦º1
+L
+java:S1128"/Remove this unused import 'lombok.AccessLevel'.(ˆ¥ó¹8ƒšñ¾º1

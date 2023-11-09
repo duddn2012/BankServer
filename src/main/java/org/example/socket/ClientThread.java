@@ -8,18 +8,22 @@ import org.example.user.User;
 
 import java.io.*;
 import java.math.BigDecimal;
-import java.net.ServerSocket;
 import java.net.Socket;
 
-public class SocketServer {
+public class ClientThread implements Runnable{
 
-    public SocketServer(Integer portNumber){
-        try (
-                ServerSocket serverSocket = new ServerSocket(portNumber);
-                Socket clientSocket = serverSocket.accept();
+    private Socket clientSocket;
+
+    public ClientThread(Socket clientSocket) {
+        this.clientSocket = clientSocket;
+    }
+
+    @Override
+    public void run() {
+        try(
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), "UTF-8"));
                 BufferedReader in = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
-        ) {
+                ) {
             User user = new User();
             Account account = null;
             System.out.println("[client] : "+ clientSocket.getInetAddress());
@@ -66,9 +70,10 @@ public class SocketServer {
                     }
                 }
             }
+        } catch (UnsupportedEncodingException e) {
+            throw new RuntimeException(e);
         } catch (IOException e) {
-            System.out.println("Exception caught when trying to listen on port "
-                    + portNumber + " or listening for a connection");
+            System.out.println("Exception caught when trying to listen on port or listening for a connection");
             System.out.println(e.getMessage());
         }
     }

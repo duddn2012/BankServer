@@ -1,13 +1,8 @@
 package org.example;
 
-import org.example.account.Account;
-import org.example.account.CheckingAccount;
-import org.example.account.FixedDepositAccount;
-import org.example.account.SavingAccount;
-import org.example.socket.SocketServer;
+import org.example.socket.BankSocket;
 
 import java.io.*;
-import java.math.BigDecimal;
 
 public class Main {
     public static void main(String[] args) throws IOException {
@@ -19,6 +14,7 @@ public class Main {
 
         int portNumber = Integer.parseInt(args[0]);
 
-        SocketServer socketServer = new SocketServer(portNumber);
+        BankSocket socketServer = new BankSocket(portNumber);
+        socketServer.start();
     }
 }
