@@ -8,6 +8,7 @@ import java.io.*;
 import java.math.BigDecimal;
 
 import static org.example.common.BigDecimalUtil.parseStringToBigDecimal;
+import static org.example.common.IOMessageUtil.*;
 
 /**
  * Client의 요청을 라우팅 및 처리하는 클래스
@@ -22,8 +23,9 @@ public class RequestRouter {
 
     public RequestRouter(BufferedWriter out, User user) {
         client = new Client();
-        this.client.setUser(user);
-        this.client.setOut(out);
+        client.setUser(user);
+        client.setOut(out);
+        clientManager.addClient(client);
     }
 
     public void routing(String msg){
@@ -31,20 +33,22 @@ public class RequestRouter {
             Integer msgHeader = Integer.valueOf(msg.substring(0, 3));
             ApiList apiValue = ApiList.getMappedValue(msgHeader);
             BigDecimal credit;
+            BufferedWriter clientOut = client.getOut();
+            User clientUser = client.getUser();
 
             switch (apiValue) {
                 case CLIENT_CONNECT_EXIT:
-                    System.out.println("클라이언트 접속 종료");
-                    client.getOut().close();
-                    break;
+                    printClientAction(clientUser.getUserId(), getConnectionOutMessage());
+                    writeAndFlushBufferWithLineAddedMessage(clientOut, getConnectionOutMessage());
+                    throw new IOException();
                 case SET_USER_ID:
-                    client.getUser().setUserId(msg.substring(3, msg.length()));
+                    clientUser.setUserId(msg.substring(3, msg.length()));
                     break;
                 case SET_USER_NAME:
-                    client.getUser().setName(msg.substring(3, msg.length()));
+                    clientUser.setName(msg.substring(3, msg.length()));
                     break;
                 case SET_USER_EMAIL:
-                    client.getUser().setEmail(msg.substring(3, msg.length()));
+                    clientUser.setEmail(msg.substring(3, msg.length()));
                     break;
                 case SET_USER_SERVICE:
                     String accountType = msg.substring(3, msg.length());
@@ -55,52 +59,45 @@ public class RequestRouter {
                     } else if (accountType.equals("3")) {
                         client.setAccount(new FixedDepositAccount());
                     } else {
-                        client.getOut().write("잘못된 서비스 종류입니다.");
+                        writeAndFlushBufferWithLineAddedMessage(clientOut, getInvalidMessage());
                         break;
                     }
-                    clientManager.addClient(client);
                     break;
                 case SET_ACCOUNT_BALANCE:
                     Class c = client.getAccount().getClass();
                     if (c.equals(CheckingAccount.class) || c.equals(FixedDepositAccount.class) || c.equals(SavingAccount.class)) {
                         client.getAccount().setBalance(parseStringToBigDecimal(msg.substring(3, msg.length())));
-                        client.getOut().write(client.getUser().getName() + "님 접속을 환영합니다. 자산을 " + client.getAccount().getBalance() + "원 보유 중이며 " + client.getAccount().getAnnualInterestRate() + "%의 연 이율 통장을 보유 중입니다." + "\n");
-                        client.getOut().flush();
+                        writeAndFlushBufferWithLineAddedMessage(clientOut, getWelcomeMessage(clientUser.getUserId(),client.getAccount().getBalance(), client.getAccount().getAnnualInterestRate()));
                     } else {
-                        System.out.println("모순되는 프로세스입니다.");
-                        client.getOut().write("모순되는 프로세스입니다.\n");
+                        printClientAction(clientUser.getUserId(), getInvalidMessage());
+                        writeAndFlushBufferWithLineAddedMessage(clientOut, getInvalidMessage());
                         break;
                     }
                     break;
                 case DEPOSIT_ACCOUNT:
                     credit = parseStringToBigDecimal(msg.substring(3, msg.length()));
                     accountService.deposit(client.getAccount(), credit);
-                    System.out.println("현재 저희 은행에는 "+ bankAccount.getBalance()+"원이 저장되어 있습니다.");
-                    client.getOut().write("[남은 금액] : "+ client.getAccount().getBalance() +"원\n");
-                    client.getOut().flush();
+                    printBankBalance(bankAccount.getBalance());
+                    writeAndFlushBufferWithLineAddedMessage(clientOut, getClientBalanceMessage(client.getAccount().getBalance()));
                     break;
                 case WITHDRAWAL_ACCOUNT:
                     credit = parseStringToBigDecimal(msg.substring(3, msg.length()));
                     accountService.withdrawal(client.getAccount(), credit);
-                    System.out.println("현재 저희 은행에는 "+ bankAccount.getBalance()+"원이 저장되어 있습니다.");
-                    client.getOut().write("[남은 금액] : " + client.getAccount().getBalance() +"원\n");
-                    client.getOut().flush();
+                    printBankBalance(bankAccount.getBalance());
+                    writeAndFlushBufferWithLineAddedMessage(clientOut, getClientBalanceMessage(client.getAccount().getBalance()));
                     break;
                 case TRANSFER_ACCOUNT:
                     String recieveUserId = msg.substring(3,4);
                     Client recieveClient = clientManager.getClientByUserId(recieveUserId);
                     credit = parseStringToBigDecimal(msg.substring(4, msg.length()));
                     accountService.transferToAccount(client.getAccount(), recieveClient.getAccount(), credit);
-                    System.out.println("현재 저희 은행에는 "+ bankAccount.getBalance()+"원이 저장되어 있습니다.");
-                    client.getOut().write("[남은 금액] : " + client.getAccount().getBalance() +"원\n");
-                    recieveClient.getOut().write("[남은 금액] : " + recieveClient.getAccount().getBalance() +"원\n");
-                    recieveClient.getOut().flush();
-                    client.getOut().flush();
+                    printBankBalance(bankAccount.getBalance());
+                    writeAndFlushBufferWithLineAddedMessage(clientOut, getClientBalanceMessage(client.getAccount().getBalance()));
+                    writeAndFlushBufferWithLineAddedMessage(recieveClient.getOut(), getClientBalanceMessage(recieveClient.getAccount().getBalance()));
                     break;
                 case INVALID:
-                    System.out.println("유효하지 않은 입력입니다.");
-                    client.getOut().write("유효하지 않은 입력입니다.\n");
-                    client.getOut().flush();
+                    printClientAction(clientUser.getUserId(), getInvalidMessage());
+                    writeAndFlushBufferWithLineAddedMessage(clientOut, getInvalidMessage());
                     break;
             }
         }catch (UnsupportedEncodingException e) {

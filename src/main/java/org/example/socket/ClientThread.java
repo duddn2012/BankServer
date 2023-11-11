@@ -1,15 +1,20 @@
 package org.example.socket;
 
+import org.example.account.domain.BankAccount;
+import org.example.router.ClientManager;
 import org.example.router.RequestRouter;
 import org.example.user.User;
 
 import java.io.*;
 import java.net.Socket;
 
+import static org.example.common.IOMessageUtil.printClientAction;
+
 public class ClientThread implements Runnable{
 
     private Socket clientSocket;
     private RequestRouter router;
+    private ClientManager clientManager = ClientManager.getInstance();
 
     public ClientThread(Socket clientSocket) {
         this.clientSocket = clientSocket;
@@ -25,9 +30,9 @@ public class ClientThread implements Runnable{
             router = new RequestRouter(out, new User());
 
             while(true){
-                String msg = in.readLine();
-                System.out.println("[client] : "+ clientSocket.getInetAddress() + " [Message] : " + msg);
-                router.routing(msg);
+                String message = in.readLine();
+                printClientAction(String.valueOf(clientSocket.getInetAddress()),message);
+                router.routing(message);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

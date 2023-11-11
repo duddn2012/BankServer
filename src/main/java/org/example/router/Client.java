@@ -12,6 +12,7 @@ import java.io.BufferedWriter;
 @Setter
 @NoArgsConstructor
 public class Client {
+
     private User user;
     private Account account;
     private BufferedWriter out;
