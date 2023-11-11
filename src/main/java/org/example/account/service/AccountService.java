@@ -1,6 +1,5 @@
 package org.example.account.service;
 
-import lombok.RequiredArgsConstructor;
 import org.example.account.domain.Account;
 import org.example.account.domain.BankAccount;
 

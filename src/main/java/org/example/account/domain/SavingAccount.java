@@ -26,7 +26,4 @@ public class SavingAccount extends Account{
     /*
      * 기간 별로 연 고정 금리 차등 부여
      */
-
-
-
 }
