@@ -1,0 +1,9 @@
+
+ç
+java:S1319"pThe return type of this method should be an interface such as "List" rather than the implementation "ArrayList".( ø»√8Ü®ªÎª1
+^
+java:S4973""<Strings and Boxed types should be compared using "equals()".(Ë˜¬‰ˇˇˇˇˇ8”¯ÌÏª1
+a
+java:S2583"DChange this condition so that it does not always evaluate to "false"(ƒ÷Íå8ã®ªÎª1
+ª
+java:S6548"òA Singleton implementation was detected. Make sure the use of the Singleton pattern is required and the implementation is the right one for the context.(«Ωøù˙ˇˇˇˇ8å®ªÎª1

@@ -1,11 +1,9 @@
 package org.example.socket;
 
-import org.example.account.domain.*;
 import org.example.router.RequestRouter;
 import org.example.user.User;
 
 import java.io.*;
-import java.math.BigDecimal;
 import java.net.Socket;
 
 public class ClientThread implements Runnable{
@@ -24,11 +22,11 @@ public class ClientThread implements Runnable{
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), "UTF-8"));
         ){
             // router는 client별로 생성해야함
-            router = new RequestRouter(clientSocket, out, new User());
+            router = new RequestRouter(out, new User());
 
             while(true){
                 String msg = in.readLine();
-                System.out.println(msg);
+                System.out.println("[client] : "+ clientSocket.getInetAddress() + " [Message] : " + msg);
                 router.routing(msg);
             }
         } catch (IOException e) {

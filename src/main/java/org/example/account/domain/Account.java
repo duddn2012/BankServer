@@ -3,7 +3,6 @@ package org.example.account.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.example.common.BigDecimalUtil;
 
 import java.math.BigDecimal;
 
@@ -18,45 +17,48 @@ import static org.example.common.BigDecimalUtil.*;
 public abstract class Account {
 
     private String userId;    //FK
+    //은행 Balance 필드에서 Critical Section이 발생
     private BigDecimal balance;
-    private BigDecimal withdrawalLimit;    //출금 한도
+    private final BigDecimal withdrawalLimit = BigDecimal.valueOf(100000);    //출금 한도
     private BigDecimal annualInterestRate;
-
-    public Account(String userId, BigDecimal balance, BigDecimal annualInterestRate) {
-        this.userId = userId;
-        this.balance = balance;
-        this.annualInterestRate = annualInterestRate;
-    }
+    private static Object balanceLock = new Object();  //synchronized lock
 
     /**
      * 입금
-     * @param credit 
+     * @param credit - 입금 금액
      */
     public void deposit(BigDecimal credit){
-        if(validateDepositCreditZero(balance, credit)){
-            balance = balance.add(credit);
+        synchronized (balanceLock){
+            if(validateDepositCreditZero(balance, credit)){
+                balance = balance.add(credit);
+            }
         }
     }
 
     /**
      * 출금
-     * @param credit 
+     * @param credit - 출금 금액
      */
     public void withdrawal(BigDecimal credit){
-        if(validateWithdrawalCreditRange(balance, credit) &&  validateWithdrawalLimit(credit, withdrawalLimit)) {
-            balance = balance.subtract(credit);
+        synchronized (balanceLock) {
+            if(validateWithdrawalCreditRange(balance, credit) &&  validateWithdrawalLimit(credit, withdrawalLimit)) {
+                balance = balance.subtract(credit);
+            }
         }
     }
 
-    /*
-     * TODO Thread Sync 문제 해결 후 작업
-     *  계좌이체
+    /**
+     * 계좌이체
+     * @param reciveAccount - 목적지 계좌
+     * @param credit - 송금 금액
      */
-    public void sendMoney(Account sendAccount, BigDecimal credit){
-        balance = balance.subtract(credit);
-        sendAccount.balance = sendAccount.balance.add(credit);
+    public void transferToAccount(Account sendSendAccount, Account reciveAccount, BigDecimal credit){
+        synchronized (balanceLock){
+            if(validateWithdrawalCreditRange(sendSendAccount.balance, credit) &&  validateWithdrawalLimit(credit, withdrawalLimit)) {
+                sendSendAccount.balance = sendSendAccount.balance.subtract(credit);
+                reciveAccount.balance = reciveAccount.balance.add(credit);
+            }
+        }
     }
 
-
 }
-

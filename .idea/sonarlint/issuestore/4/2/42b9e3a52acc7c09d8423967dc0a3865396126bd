@@ -1,0 +1,22 @@
+
+g	java:S112k"FDefine and throw a dedicated exception instead of using a generic one.(Ò‚Òéüÿÿÿÿ8å«Ùì»1
+K
+java:S3740@"/Provide the parametrized type for this generic.(•ô‚|8æ«Ùì»1
+u
+java:S1192O"SDefine a constant instead of duplicating this literal "[ë‚¨ì€ ê¸ˆì•¡] : " 4 times.(§Ñ¯—øÿÿÿÿ8ç«Ùì»1
+~
+java:S1192N"\Define a constant instead of duplicating this literal "í˜„ì¬ ì €í¬ ì€í–‰ì—ëŠ” " 3 times.(æ“ô·ÿÿÿÿÿ8’øØì»1
+„
+java:S1192N"bDefine a constant instead of duplicating this literal "ì›ì´ ì €ì¥ë˜ì–´ ìˆìŠµë‹ˆë‹¤." 3 times.(æ“ô·ÿÿÿÿÿ8ç«Ùì»1
+T
+java:S1135"2Complete the task associated to this TODO comment.(åÌ›‘ÿÿÿÿÿ8±øØì»1
+F	java:S106%"+Replace this use of System.out by a logger.(ÚêH8¿øØì»1
+F	java:S106F"+Replace this use of System.out by a logger.(Ö’Ï	8Œ¬Ùì»1
+L	java:S106N"+Replace this use of System.out by a logger.(æ“ô·ÿÿÿÿÿ8¬Ùì»1
+L	java:S106U"+Replace this use of System.out by a logger.(æ“ô·ÿÿÿÿÿ8¬Ùì»1
+L	java:S106^"+Replace this use of System.out by a logger.(æ“ô·ÿÿÿÿÿ8¬Ùì»1
+L	java:S106e"+Replace this use of System.out by a logger.(äÇ’ ıÿÿÿÿ8¬Ùì»1
+L	java:S106n"+Replace this use of System.out by a logger.(íÏÎ¯ÿÿÿÿÿ8‘¬Ùì»1
+L	java:S106o"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8‘¬Ùì»1
+ã
+java:S6541"ÅA "Brain Method" was detected. Refactor it to reduce at least one of the following metrics: LOC from 84 to 64, Complexity from 17 to 14, Nesting Level from 3 to 2, Number of Variables from 10 to 6.(µ¡üÑ8’¬Ùì»1

@@ -6,36 +6,48 @@ import org.example.account.domain.BankAccount;
 
 import java.math.BigDecimal;
 
-@RequiredArgsConstructor
 public class AccountService {
 
-    private final BankAccount bankAccount;
-    private final Account account;
+    private static AccountService instacne;
+
+    private AccountService(){
+
+    }
+
+    public static AccountService getInstacne() {
+        if(instacne == null){
+            instacne = new AccountService();
+        }
+        return instacne;
+    }
+
+    private BankAccount bankAccount = BankAccount.getInstacne();
 
     /**
      *  입금
-     *  @param credit
+     *  @param credit - 입금 금액
      */
-    public void deposit(BigDecimal credit){
+    public void deposit(Account account, BigDecimal credit){
         account.deposit(credit);
         bankAccount.deposit(credit);
     }
 
     /**
      * 출금
-     * @param credit
+     * @param credit - 출금 금액
      */
-    public void withdrawal(BigDecimal credit){
+    public void withdrawal(Account account, BigDecimal credit){
         account.withdrawal(credit);
         bankAccount.withdrawal(credit);
     }
 
-    /*
-     * TODO Thread Sync 문제 해결 후 작업
-     *  계좌이체
+    /**
+     * 계좌이체
+     * @param recieveAccount - 목적지 계좌
+     * @param credit - 송금 금액
      */
-    public void sendMoney(Account sendAccount, BigDecimal credit){
-
+    public void transferToAccount(Account sendAccount, Account recieveAccount, BigDecimal credit){
+        sendAccount.transferToAccount(sendAccount, recieveAccount, credit);
     }
 
 }

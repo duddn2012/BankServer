@@ -37,7 +37,13 @@ public enum ApiList {
     SET_ACCOUNT_BALANCE(301),
     
     //입금
-    DEPOSIT_ACCOUNT(302)
+    DEPOSIT_ACCOUNT(302),
+    
+    //출금
+    WITHDRAWAL_ACCOUNT(303),
+
+    //계좌 이체
+    TRANSFER_ACCOUNT(304)
     ;
 
 

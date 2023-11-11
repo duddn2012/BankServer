@@ -1,19 +1,4 @@
 
-]
-java:S1854"@Remove this useless assignment to local variable "socketServer".(ÙøßÅ8óÎ›§º1
 ‰
-java:S1130"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(œû¿Ø8Âúª§º1
-L	java:S106"+Replace this use of System.err by a logger.(ôßú›ÿÿÿÿÿ8ôÎ›§º1
-N
-java:S1481"1Remove this unused "socketServer" local variable.(ÙøßÅ8öÎ›§º1
-U
-java:S1128"8Remove this unused import 'org.example.account.Account'.(º•›©8Åúª§º1
-]
-java:S1128"@Remove this unused import 'org.example.account.CheckingAccount'.(¢ôè8Åúª§º1
-`
-java:S1128"DRemove this unused import 'org.example.account.FixedDepositAccount'.(ĞÏ—J8Åúª§º1
-[
-java:S1128">Remove this unused import 'org.example.account.SavingAccount'.(íøÈÑ8Åúª§º1
-N
-java:S1128
-"1Remove this unused import 'java.math.BigDecimal'.(êêŠ8Åúª§º1
+java:S1130"lRemove the declaration of thrown exception 'java.io.IOException', as it cannot be thrown from method's body.(œû¿Ø8Âúª§º1
+L	java:S106"+Replace this use of System.err by a logger.(ôßú›ÿÿÿÿÿ8ôÎ›§º1
