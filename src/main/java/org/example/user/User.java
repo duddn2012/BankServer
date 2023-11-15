@@ -9,7 +9,6 @@ import lombok.Setter;
 import java.io.Serializable;
 
 @Getter
-@Setter
 @NoArgsConstructor
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -23,4 +22,13 @@ public class User implements Serializable {
         this.email = email;
     }
 
+    public void setUserId(String userId){
+        this.userId = userId;
+    }
+    public void setName(String name){
+        this.name = name;
+    }
+    public void setEmail(String email){
+        this.email = email;
+    }
 }

@@ -2,6 +2,9 @@ package org.example.account.domain;
 
 import lombok.Getter;
 
+/*
+ * Ko's Bank
+ */
 @Getter
 public class BankAccount extends Account {
 

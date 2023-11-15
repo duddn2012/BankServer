@@ -27,9 +27,10 @@ public class ClientThread implements Runnable{
                 BufferedWriter out = new BufferedWriter(new OutputStreamWriter(clientSocket.getOutputStream(), "UTF-8"));
         ){
             // router는 client별로 생성해야함
-            router = new RequestRouter(out, new User());
+            router = new RequestRouter(out);
 
             while(true){
+                //입력을 라우팅
                 String message = in.readLine();
                 printClientAction(String.valueOf(clientSocket.getInetAddress()),message);
                 router.routing(message);

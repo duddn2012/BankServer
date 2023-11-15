@@ -10,6 +10,7 @@ import java.util.ArrayList;
 public class ClientManager {
     private static final ClientManager instance = new ClientManager();
     private ArrayList<Client> connectedClients = new ArrayList<>();
+    private Object connectedClientsLock = new Object();
 
     private ClientManager() {}
 
@@ -20,21 +21,21 @@ public class ClientManager {
         return instance;
     }
 
-    public ArrayList<Client> getConnectedClients() {
-        return connectedClients;
-    }
-
     public void addClient(Client client) {
-        connectedClients.add(client);
+        synchronized (connectedClientsLock) {
+            connectedClients.add(client);
+        }
     }
 
     public void deleteClient(Client client) {
-        connectedClients.remove(client);
+        synchronized (connectedClientsLock) {
+            connectedClients.remove(client);
+        }
     }
 
     public Account getAccount(String userId){
         for(Client client: connectedClients){
-            if(client.getAccount().getUserId() == userId){
+            if(client.getAccount().getUserId().equals(userId)){
                 return client.getAccount();
             }
         }
@@ -49,5 +50,4 @@ public class ClientManager {
         }
         return null;
     }
-
 }

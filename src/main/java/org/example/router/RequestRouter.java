@@ -21,9 +21,9 @@ public class RequestRouter {
     private BankAccount bankAccount = BankAccount.getInstacne();
     private ClientManager clientManager = ClientManager.getInstance();
 
-    public RequestRouter(BufferedWriter out, User user) {
+    public RequestRouter(BufferedWriter out) {
         client = new Client();
-        client.setUser(user);
+        client.setUser(new User());
         client.setOut(out);
         clientManager.addClient(client);
     }
