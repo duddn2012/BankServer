@@ -2,18 +2,23 @@ package org.example.account.service;
 
 import org.example.account.domain.Account;
 import org.example.account.domain.BankAccount;
+import org.example.dbconnection.DbConnection;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class AccountService {
 
     private static AccountService instacne;
+    private DbConnection dbConnection;
 
     private AccountService(){
-
+        dbConnection = new DbConnection();
     }
 
-    public static AccountService getInstacne() {
+    public static AccountService getInstance() {
         if(instacne == null){
             instacne = new AccountService();
         }
@@ -47,6 +52,11 @@ public class AccountService {
      */
     public void transferToAccount(Account sendAccount, Account recieveAccount, BigDecimal credit){
         sendAccount.transferToAccount(sendAccount, recieveAccount, credit);
+    }
+
+    public BigDecimal getAccountBalance(BigInteger accountId) {
+        ArrayList<Map<String,Object>> queryResult = dbConnection.getDataByQuery("select balance from account where account_id="+accountId);
+        return BigDecimal.valueOf((Long) queryResult.get(0).get("balance"));
     }
 
 }

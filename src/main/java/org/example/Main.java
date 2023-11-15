@@ -2,10 +2,8 @@ package org.example;
 
 import org.example.socket.BankSocket;
 
-import java.io.*;
-
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         if (args.length != 1) {
             System.err.println("<port number>를 입력해주세요.");

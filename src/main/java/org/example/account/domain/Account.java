@@ -2,10 +2,13 @@ package org.example.account.domain;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.example.common.BigDecimalUtil;
+import org.example.common.PropertyUtil;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.Properties;
 
 import static org.example.common.BigDecimalUtil.*;
@@ -17,28 +20,16 @@ import static org.example.common.BigDecimalUtil.*;
 @Setter
 public abstract class Account {
 
-    private static final String PROPERTIES_FILE = "config.properties";
-
-    private String userId;  //FK
+    private final PropertyUtil propertyUtil = PropertyUtil.getInstance();
+    private BigInteger userId;  //FK
     private BigDecimal balance; //은행 Balance 필드에서 Critical Section이 발생
-    private BigDecimal withdrawalLimit;    //출금 한도
+    private BigDecimal withdrawalLimit; //출금 한도
     private BigDecimal annualInterestRate;
     private static Object balanceLock = new Object();  //synchronized lock
 
     public Account() {
-        Properties properties = new Properties();
-        try(InputStream input = Account.class.getClassLoader().getResourceAsStream(PROPERTIES_FILE)) {
-            if (input == null) {
-                System.out.println("파일을 찾을 수 없습니다." + PROPERTIES_FILE);
-                return;
-            }
-
-            properties.load(input);
-
-            withdrawalLimit = parseStringToBigDecimal(properties.getProperty("account.withdrawalLimit"));
-        }catch (IOException e){
-            e.printStackTrace();
-        }
+        String withdrawalLimitValue = propertyUtil.getPropertyByString("account.withdrawalLimit");
+        withdrawalLimit = BigDecimalUtil.parseStringToBigDecimal(withdrawalLimitValue);
     }
 
     /**

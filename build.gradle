@@ -25,6 +25,8 @@ repositories {
 
 dependencies {
     compileOnly 'org.projectlombok:lombok:1.18.30'
+
+    implementation 'mysql:mysql-connector-java:8.0.23'
     annotationProcessor 'org.projectlombok:lombok:1.18.30'
 
     testImplementation platform('org.junit:junit-bom:5.9.1')

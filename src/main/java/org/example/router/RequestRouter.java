@@ -16,7 +16,7 @@ import static org.example.common.IOMessageUtil.*;
  */
 public class RequestRouter {
 
-    private AccountService accountService = AccountService.getInstacne();
+    private AccountService accountService = AccountService.getInstance();
     private Client client;
     private BankAccount bankAccount = BankAccount.getInstacne();
     private ClientManager clientManager = ClientManager.getInstance();
