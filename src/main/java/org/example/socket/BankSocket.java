@@ -1,24 +1,22 @@
 package org.example.socket;
 
-import org.example.account.domain.Account;
 import org.example.account.domain.BankAccount;
 import org.example.account.service.AccountService;
 import org.example.common.BigDecimalUtil;
+import org.example.common.PropertyUtil;
 
 import java.io.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.ArrayList;
-
-import static org.example.common.BigDecimalUtil.parseStringToBigDecimal;
 
 public class BankSocket extends Thread{
 
     private ServerSocket serverSocket;
     private final BankAccount bankAccount = BankAccount.getInstacne();
     private final AccountService accountService = AccountService.getInstance();
+    private final PropertyUtil propertyUtil = PropertyUtil.getInstance();
 
     public BankSocket(Integer portNumber) {
         try {
@@ -30,7 +28,8 @@ public class BankSocket extends Thread{
 
     @Override
     public void run(){
-        BigDecimal balance = accountService.getAccountBalance(BigInteger.valueOf(1));
+        Long bankAccountId = Long.valueOf(propertyUtil.getPropertyByString("bank.account.id"));
+        BigDecimal balance = accountService.getAccountBalance(bankAccountId);
         bankAccount.setBalance(balance);
         System.out.println("현재 저희 은행에는 "+ bankAccount.getBalance()+"원이 저장되어 있습니다.");
 

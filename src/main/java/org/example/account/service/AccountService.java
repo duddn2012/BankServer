@@ -54,7 +54,7 @@ public class AccountService {
         sendAccount.transferToAccount(sendAccount, recieveAccount, credit);
     }
 
-    public BigDecimal getAccountBalance(BigInteger accountId) {
+    public BigDecimal getAccountBalance(Long accountId) {
         ArrayList<Map<String,Object>> queryResult = dbConnection.getDataByQuery("select balance from account where account_id="+accountId);
         return BigDecimal.valueOf((Long) queryResult.get(0).get("balance"));
     }
