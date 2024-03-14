@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="BankServer.main:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/BankServer_main_jar</output-path>
-    <root id="archive" name="BankServer.main.jar">
-      <element id="module-output" name="BankServer.main" />
-    </root>
-  </artifact>
-</component>
